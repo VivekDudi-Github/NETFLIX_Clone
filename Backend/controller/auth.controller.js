@@ -81,22 +81,17 @@ export const loginFunc = async(req , res) => {
         const {email , password} = req.body ;
     
         if(!email || !password){
-            
-            const missingfeilds = [] ;
-            !email ? missingfeilds.push('email') : null ;
-            !password ? missingfeilds.push('password') : null ;
-            
-            return ResError(res , 400 , "required feilds are missing : "+missingfeilds )
+            return ResError(res , 400 , "invalid credentials" )
         }
     
         const UserExistCheck = await User.findOne({email : email})
         
         if(!UserExistCheck){
-            return ResError(res , 400 , "no user found with the following email" + email ) 
+            return ResError(res , 400 , "no user found with the following email" ) 
         }
     
         const checkPassword = await bcryptjs.compare(password , UserExistCheck.password)
-        console.log(checkPassword);
+        
         
 
         if(checkPassword !== true){
@@ -111,7 +106,7 @@ export const loginFunc = async(req , res) => {
                 refreshToken : refreshToken
             }} , 
             {new : true}
-        )
+        ).select("-password -refreshToken")
     
         return res.status(200).json({
             message : "loggedin successfully" , 
@@ -128,10 +123,9 @@ export const loginFunc = async(req , res) => {
 
 
 export const logoutFunc = async(req , res) => {
-    res.send("logout")
     
     try {
-        res.clearCookies()
+        res.clearCookie()
         
         return res.status(200).json({
             message : 'Successfully logged Out'
