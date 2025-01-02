@@ -1,5 +1,4 @@
-import { fetchFromTMDB } from "../utils/movieAPI.js";
-
+import { fetchFromTMDB } from "../utils/movieAPI.js"
 
 const ResError = (res, statusCode , error) => {
     return res.status(statusCode).json({
@@ -14,16 +13,15 @@ const ResSuccess = (res , statusCode , data) => {
     })
 }
 
-
-export const fetchTrendingMovie = async( req , res) => {
-    try {
-        const url = 'https://api.themoviedb.org/3/discover/movie?include_adult=false&include_video=false&language=en-US&page=1&sort_by=popularity.desc'
+export const fetchTrendingTv = async(req , res) => {
+    try {           
+        const url = 'https://api.themoviedb.org/3/trending/tv/day?language=en-US'
         const data = await fetchFromTMDB(url) ;
+        
+        const randomtvIndex = Math.floor(Math.random()*data.results.length)
+        const randomtv = data.results[randomtvIndex] ;
 
-        const randomMovieIndex = Math.floor(Math.random()*data.results.length)
-        const randomMovie = data.results[randomMovieIndex] ;
-
-        return ResSuccess(res , 200 , randomMovie)
+        return ResSuccess(res , 200 , randomtv)
 
     } catch (error) {
         console.log(error);
@@ -31,12 +29,15 @@ export const fetchTrendingMovie = async( req , res) => {
     }
 }
 
-export const fetchMovieTrailer = async(req , res)=>{
+export const fetchTvTrailer = async(req , res) => {
     try {
         const {id} = req.params ; 
-        const url  = `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`
+        const url  = `https://api.themoviedb.org/3/tv/${id}/videos?language=en-US`
 
         const response = await fetchFromTMDB(url) ;
+        if(response.results < 1){
+            return res.status(404).send(null)
+        }
 
         return ResSuccess(res , 200 , response.results)
 
@@ -51,12 +52,13 @@ export const fetchMovieTrailer = async(req , res)=>{
     }
 }
 
-export const fetchMovieDetails = async( req , res) => {
+export const fetchTvDetails = async(req , res) => {
     try {
         const {id} = req.params ;
-        const url = `https://api.themoviedb.org/3/movie/${id}?language=en-US`
+        const url = `https://api.themoviedb.org/3/tv/${id}?language=en-US`
         
         const response = await fetchFromTMDB(url) ;
+        console.log(response);
         
         return ResSuccess(res , 200 , response)
 
@@ -68,10 +70,11 @@ export const fetchMovieDetails = async( req , res) => {
     }
 }
 
-export const fetchSimilarMovies = async(req , res) => {
+
+export const fetchSimilarTv = async(req , res) => {
     try {
         const {id} = req.params ;
-        const url = `https://api.themoviedb.org/3/movie/${id}/similar?language=en-US&page=1` ;
+        const url = `https://api.themoviedb.org/3/tv/${id}/similar?language=en-US&page=1` ;
 
         const response = await fetchFromTMDB(url) ;
         if(response.results.length < 1){
@@ -80,12 +83,16 @@ export const fetchSimilarMovies = async(req , res) => {
         return ResSuccess(res , 200 , response.results)
 
     } catch (error) {
-        console.log("error in fetching similar movies" , error);
+        if(error.message.includes(404)){
+            return res.status(404).send(null)
+        }
+        console.log('error in fetching similar tv shows' , error);
+        
         return ResError(res , 500 ,"internal server error")
     }
 }
 
-export const fetchCatagoryMovies = async(req , res) => {
+export const fetchCatagoryTv = async(req , res) => {
     try {
         //catgories = top_rated , popular , upcoming , now_playing
         const {catagory} = req.params ;
@@ -101,3 +108,6 @@ export const fetchCatagoryMovies = async(req , res) => {
         return ResError(res , 500 , "internal server error")
     }
 }
+
+
+
