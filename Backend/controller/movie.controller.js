@@ -89,7 +89,7 @@ export const fetchCatagoryMovies = async(req , res) => {
     try {
         //catgories = top_rated , popular , upcoming , now_playing
         const {catagory} = req.params ;
-        const url = `https://api.themoviedb.org/3/movie/${catagory}?language=en-US&page=1`
+        const url = `https://api.themoviedb.org/3/tv/${catagory}?language=en-US&page=1`
         const response = await fetchFromTMDB(url) ;
         
         return ResSuccess(res , 200 , response.results) ;

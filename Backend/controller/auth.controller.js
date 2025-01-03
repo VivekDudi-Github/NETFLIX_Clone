@@ -3,13 +3,7 @@ import bcryptjs from 'bcryptjs'
 import {generateTokenAndSetCookie} from "../utils/generateJwt.js"
 
 export const signupFunc = async(req , res) => {
-const resError = (status , error) => {
-    return res.status(status).json({
-        error :  error
-    })
-}
-
-    try {
+    try {    
         const {email , username , password } = req.body ;
         
         
@@ -19,18 +13,18 @@ const resError = (status , error) => {
             !email ? missingfeilds.push('email') : null ;
             !username ? missingfeilds.push('username') : null ;
             !password ? missingfeilds.push('password') : null ;
-            return resError(400 , "server didn't get the "+ missingfeilds )
+            return ResError(res ,400 , "server didn't get the "+ missingfeilds )
         }
         
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
         if(!emailRegex.test(email)){
-            return resError(400 , 'email format is incorrect')
+            return ResError( res , 400 , 'email format is incorrect')
         }
         
 
         if(password.length<10){
-            return resError(400 , 'password length is less than 10 words')
+            return ResError(res ,400 , 'password length is less than 10 words')
         }
         const salt = await bcryptjs.genSalt(10)    
         const hashPassword = await bcryptjs.hash(password , salt)
@@ -39,10 +33,10 @@ const resError = (status , error) => {
         const existingUsername = await User.findOne({username})
 
         if(existingEmail){
-            return resError(400 , email +': email is already used')
+            return ResError(res , 400 , email +': email is already used')
         }
         if(existingUsername){
-        return resError(400 , username+': username is already taken')
+        return ResError(res , 400 , username+': username is already taken')
         }
 
         let user = await User.create({
@@ -65,7 +59,7 @@ const resError = (status , error) => {
    
     } catch (error) {
         console.log('error from signupFunc' ,error);
-        return resError(400 , 'singingUp func , error:'+error)
+        return ResError(res ,400 , 'singingUp func , error:'+error)
    }
 
 }

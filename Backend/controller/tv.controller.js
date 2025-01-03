@@ -94,9 +94,9 @@ export const fetchSimilarTv = async(req , res) => {
 
 export const fetchCatagoryTv = async(req , res) => {
     try {
-        //catgories = top_rated , popular , upcoming , now_playing
+        //catgories = top_rated , popular , on_the_air , airing_today
         const {catagory} = req.params ;
-        const url = `https://api.themoviedb.org/3/movie/${catagory}?language=en-US&page=1`
+        const url = `https://api.themoviedb.org/3/tv/${catagory}?language=en-US&page=1'`
         const response = await fetchFromTMDB(url) ;
         
         return ResSuccess(res , 200 , response.results) ;

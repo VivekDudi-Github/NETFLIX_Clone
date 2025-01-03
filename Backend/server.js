@@ -4,7 +4,9 @@ import cookieParser from "cookie-parser";
 import authRoutes from './route/auth.route.js'
 import movieRoutes from './route/movies.route.js'
 import tvRoutes from './route/tv.routes.js' 
+import searchRoutes from './route/search.route.js'
 
+import { protectRoute } from "./middleware/protectRoute.js";
 import { ENV_VARS } from "./config/envVAr.js";
 import { connectDB } from "./config/db.js";
 
@@ -16,8 +18,9 @@ app.use(express.json({limit : '108kb'}))
 app.use(cookieParser())
 
 app.use('/api/v1/auth' , authRoutes)
-app.use('/api/v1/movies' , movieRoutes)
-app.use('/api/v1/tv' , tvRoutes)
+app.use('/api/v1/movies' , protectRoute , movieRoutes)
+app.use('/api/v1/tv' ,protectRoute , tvRoutes)
+app.use('/api/v1/search' , protectRoute , searchRoutes)
 
 app.listen(port ,() => {
     console.log("server started at http://localhost:"+port);
