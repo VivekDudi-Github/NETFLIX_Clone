@@ -1,4 +1,5 @@
 import { fetchFromTMDB } from "../utils/movieAPI.js"
+import { SearchQueryHistory } from "../models/searchHistory.model.js"
 
 const ResError = (res , code ,error) => {
     return res.status(code).json({
@@ -16,10 +17,21 @@ const ResSuccess = (res , code  , data) => {
 
 export const searchMovieFunc  = async (req , res)=> {
     try {
-        const query = req.query
+        const {query} = req.params
         const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
         const response = await fetchFromTMDB(url)
-        
+        const textquery = {
+            text : query , 
+            type : 'Movie'
+        }
+
+        await SearchQueryHistory.findOneAndUpdate(
+            {userId : req.user._id} , 
+            {$push : { queries : textquery}} , 
+            {new : true ,upsert : true }
+        )
+
+
         return ResSuccess(res ,200 ,response.results )
 
 
@@ -34,9 +46,19 @@ export const searchMovieFunc  = async (req , res)=> {
 
 export const searchPersonFunc  = async (req , res)=> {
     try {
-        const query = req.query
+        const {query} = req.params
         const url = `https://api.themoviedb.org/3/search/person?query=${query}&include_adult=false&language=en-US&page=1`
         const response = await fetchFromTMDB(url)
+        const textquery = {
+            text : query , 
+            type : 'Person'
+        }
+
+        await SearchQueryHistory.findOneAndUpdate(
+            {userId : req.user._id} , 
+            {$push : { queries : textquery}} , 
+            {new : true ,upsert : true }
+        )
 
         return ResSuccess(res ,200 ,response.results )
 
@@ -52,10 +74,22 @@ export const searchPersonFunc  = async (req , res)=> {
 
 export const searchTvFunc  = async (req , res)=> {
     try {
-        const query = req.query
-        const url = `https://api.themoviedb.org/3/search/movie?query=${query}&include_adult=false&language=en-US&page=1`
+        const {query} = req.params ;
+        const url = `https://api.themoviedb.org/3/search/tv?query=${query}&include_adult=false&language=en-US&page=1`
         const response = await fetchFromTMDB(url)
-        
+        const textquery = {
+            text : query , 
+            type : 'Tv'
+        }
+
+        await SearchQueryHistory.findOneAndUpdate(
+            {userId : req.user._id} , 
+            {$push : { queries : textquery}} , 
+            {new : true ,upsert : true }
+        )
+
+
+
         return ResSuccess(res ,200 ,response.results )
 
 

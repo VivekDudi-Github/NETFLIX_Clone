@@ -5,6 +5,6 @@ const router = express.Router() ;
 
 router.get('/person/:query' , searchPersonFunc) 
 router.get('/movie/:query' , searchMovieFunc)
-router.get('tv/:query' , searchTvFunc)
+router.get('/tv/:query' , searchTvFunc)
 
 export default router
