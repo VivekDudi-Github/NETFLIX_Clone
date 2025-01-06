@@ -42,19 +42,22 @@ const SearchQueryHistorySchema  = new mongoose.Schema({
         ref : 'User' , 
         required : true ,
     } , 
-    queries : [
-        {
-            text : {
-                type : String , 
-                required : true , 
-            } , 
-            type : {
-                type : String ,
-                enum : ['Movie' , 'Tv' , 'Person'] , 
-                required : true 
+    queries : {
+        type : [
+            {
+                text : {
+                    type : String , 
+                    required : true , 
+                } , 
+                type : {
+                    type : String ,
+                    enum : ['Movie' , 'Tv' , 'Person'] , 
+                    required : true 
+                }
             }
-        }
-    ]
+        ] ,
+        default : []
+    }
 } , {timestamps : true})
 
 export const SearchQueryHistory = mongoose.model('SearchQueryHistory' , SearchQueryHistorySchema)

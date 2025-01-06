@@ -1,5 +1,6 @@
 import { fetchFromTMDB } from "../utils/movieAPI.js"
 import { SearchQueryHistory } from "../models/searchHistory.model.js"
+import { ReturnDocument } from "mongodb"
 
 const ResError = (res , code ,error) => {
     return res.status(code).json({
@@ -25,12 +26,21 @@ export const searchMovieFunc  = async (req , res)=> {
             type : 'Movie'
         }
 
-        await SearchQueryHistory.findOneAndUpdate(
-            {userId : req.user._id} , 
-            {$push : { queries : textquery}} , 
-            {new : true ,upsert : true }
-        )
+        const fetchSearchQueryHistory = await SearchQueryHistory.findOne({
+            userId : req.user._id
+        }) 
 
+        if(!fetchSearchQueryHistory){
+            await SearchQueryHistory.create({
+                userId : req.user._id ,
+                queries : [textquery]
+            })
+        }else if(fetchSearchQueryHistory.queries.at(-1)?.text !== textquery.text){
+            await SearchQueryHistory.findOneAndUpdate({userId : req.user._id} ,{
+                $push : { queries : textquery}
+            })
+        }
+        
 
         return ResSuccess(res ,200 ,response.results )
 
@@ -54,11 +64,22 @@ export const searchPersonFunc  = async (req , res)=> {
             type : 'Person'
         }
 
-        await SearchQueryHistory.findOneAndUpdate(
-            {userId : req.user._id} , 
-            {$push : { queries : textquery}} , 
-            {new : true ,upsert : true }
-        )
+        const fetchSearchQueryHistory = await SearchQueryHistory.findOne({
+            userId : req.user._id
+        }) 
+
+        if(!fetchSearchQueryHistory){
+            await SearchQueryHistory.create({
+                userId : req.user._id ,
+                queries : [textquery]
+            })
+        }else if(fetchSearchQueryHistory.queries?.at(-1)?.text !== textquery.text){
+            await SearchQueryHistory.findOneAndUpdate({userId : req.user._id} ,{
+                $push : { queries : textquery}
+            })
+        }
+        
+            
 
         return ResSuccess(res ,200 ,response.results )
 
@@ -82,13 +103,20 @@ export const searchTvFunc  = async (req , res)=> {
             type : 'Tv'
         }
 
-        await SearchQueryHistory.findOneAndUpdate(
-            {userId : req.user._id} , 
-            {$push : { queries : textquery}} , 
-            {new : true ,upsert : true }
-        )
+        const fetchSearchQueryHistory = await SearchQueryHistory.findOne({
+            userId : req.user._id
+        }) 
 
-
+        if(!fetchSearchQueryHistory){
+            await SearchQueryHistory.create({
+                userId : req.user._id ,
+                queries : [textquery]
+            })
+        }else if(fetchSearchQueryHistory.queries.at(-1)?.text !== textquery.text){
+            await SearchQueryHistory.findOneAndUpdate({userId : req.user._id} ,{
+                $push : { queries : textquery}
+            })
+        }
 
         return ResSuccess(res ,200 ,response.results )
 
@@ -100,4 +128,43 @@ export const searchTvFunc  = async (req , res)=> {
         console.log(error);
         return ResError(res , 500 , "internal server Error")
     }        
+}
+
+//search histroy get and delete
+
+export const getSearchQueryHistory = async( req , res) => {
+    try {
+        const userId  = req.user._id ; 
+
+        const fetchSearchQueryHistory = await SearchQueryHistory.findOne({userId : userId})
+        
+        if(!fetchSearchQueryHistory){
+            return res.status(200).send(null)
+        }else{
+            return ResSuccess(res , 200 , fetchSearchQueryHistory)
+        }
+
+    } catch (error) {
+            console.log('error while fetching Search Query History' , error);
+            return ResError(res , 500 , 'Internal server error')
+    }
+
+}
+
+
+export const deleteSearchQueryHistory = async( req , res) => {
+    try {
+        const {id} = req.params ;
+        console.log(id);
+        
+        await SearchQueryHistory.findOneAndUpdate(
+            {userId : req.user._id} , 
+            {$pull : { queries : {_id : id}}}
+        )
+        return ResSuccess(res , 200)     
+    
+    } catch (error) {
+        console.log('error while deleting a query history' , error);
+        return ResError(res ,500  , 'Internal server error')
+    }
 }
