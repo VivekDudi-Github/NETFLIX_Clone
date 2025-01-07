@@ -1,6 +1,5 @@
 import { fetchFromTMDB } from "../utils/movieAPI.js"
 import { SearchQueryHistory } from "../models/searchHistory.model.js"
-import { ReturnDocument } from "mongodb"
 
 const ResError = (res , code ,error) => {
     return res.status(code).json({
