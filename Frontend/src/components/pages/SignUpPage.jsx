@@ -1,24 +1,25 @@
-import axios from 'axios';
+
 import React, { useState } from 'react'
-import { Link, redirect } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuthStore } from '../store/authUser';
+
 
 function SignUp() {
-  const [email , setEmail] = useState('') ;
+  const {searchParams} = new URL(document.location)
+  const paramsEmail = searchParams.get('email');
+  const Navigate = useNavigate()  
+
+  const [email , setEmail] = useState(paramsEmail || '') ;
   const [username , setUsername] = useState('')
   const [password, setPassword] = useState('')
+  const {signup  , User} = useAuthStore() ;
   
   const handleSubmitFunc = async (e) => {
-    e.preventDefault() ;
-
-    const body = { email , username  , password} 
-
-    try {
-      const response = await axios.post('http://localhost:5000/api/v1/auth/signup' , body)
-      console.log(response);
-      redirect('/')
-    } catch (error) {
-      console.log(error);
-    }
+  e.preventDefault() ;
+    
+    await signup({email , password , username})
+    console.log(User);
+    
   }  
 
   
@@ -47,6 +48,7 @@ function SignUp() {
                     required
                     type='email'
                     placeholder='you@gmail.com'
+                    defaultValue={email}
                     className='w-full py-2 px-3 mt-1 border border-gray-700 rounded-md bg-transparent text-white outline-none duration-500 focus:ring-1 focus:ring-blue-400  '
                     onChange={(e) => setEmail(e.target.value)}
                   />
@@ -69,7 +71,7 @@ function SignUp() {
                   </label>
                   <input id='password'
                     type='password'
-                    placeholder=''
+                    placeholder='Please Keep a strong & unique password'
                     className='w-full py-2 px-3 mt-1 border border-gray-700 rounded-md bg-transparent text-white outline-none duration-500 focus:ring-1 focus:ring-blue-400  '
                     onChange={(e) => setPassword(e.target.value)}
                     required

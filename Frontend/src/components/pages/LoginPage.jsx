@@ -44,7 +44,7 @@ function LoginPage() {
                 </label>
                 <input id='password'
                   type='password'
-                  placeholder='Please Keep a strong & unique password'
+                  placeholder='Always Keep a strong & unique password'
                   className='w-full py-2 px-3 mt-1 border border-gray-700 rounded-md bg-transparent text-white outline-none duration-500 focus:ring-1 focus:ring-blue-400  '
                   onChange={(e) => setPassword(e.target.value)}
                   required
@@ -56,7 +56,7 @@ function LoginPage() {
           </form>
           <div className='text-center text-gray-400 text-sm hover:scale-105 duration-200'>
             Don't have an account? 
-            <Link className='hover:underline hover:text-cyan-400 pl-1 duration-500' to={'/login'}> 
+            <Link className='hover:underline hover:text-cyan-400 pl-1 duration-500' to={'/signup'}> 
               Sign Up
             </Link>
           </div>
