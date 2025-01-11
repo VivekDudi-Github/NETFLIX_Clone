@@ -70,7 +70,7 @@ import {ChevronRight} from 'lucide-react'
           <div className='relative z-10'>
             <img className='mt-4 ' src='/tv.png' alt='Tv Isllutration'/>
             <video className='absolute scale-105 h-1/2 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'
-              autoPlay="true"
+              autoPlay={true}
               playsInline muted
               loop
               >
@@ -87,7 +87,7 @@ import {ChevronRight} from 'lucide-react'
          
           <div className=' relative'>
             <img src='/stranger-things-lg.png.jpg' alt='strnager-things-mobile-View'/>
-            <div className='border-slate-500 border rounded-md px-2 absolute flex items-center gap-2 bottom-5 left-1/2  -translate-x-1/2 bg-black w-3/4 lg:w-1/2 h-24  '>
+            <div className='border-slate-500 border rounded-md px-2 absolute flex items-center gap-2 bottom-5 left-1/2  -translate-x-1/2 bg-black w-3/4 lg:w-1/2 lg:h-24 h-16  '>
               <img className='h-full' src='/stranger-things-sm.png' alt='stranger-things-cover' />
                 <div className='flex justify-between items-center w-full'>
                   <div className=' flex flex-col gap-0'>
@@ -125,8 +125,8 @@ import {ChevronRight} from 'lucide-react'
 
           <div className='relative z-10'>
             <img className='mt-4 ' src='/device-pile.png' alt='Tv isllutration'/>
-            <video className='absolute scale-90 h-1/2 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/2 -z-10'
-              autoPlay="true"
+            <video className='absolute scale-90 h-1/2 top-1/3 left-1/2 -translate-x-1/2 -translate-y-1/3 -z-10'
+              autoPlay= {true}
               playsInline muted
               loop
               >

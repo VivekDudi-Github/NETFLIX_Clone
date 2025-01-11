@@ -24,7 +24,7 @@ function SignUp() {
 
   
   return (
-    <div className=' h-screen w-full'>
+    <div className=' min-h-screen w-full'>
       <div className=' h-full w-full bg-gradient-to-b from-[#000000CC] to-transparent fixed -z-10'></div>
           <img className='h-full w-full object-cover fixed -z-20 ' src='hero.png'  />
 

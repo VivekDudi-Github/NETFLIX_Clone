@@ -73,7 +73,7 @@ const ResError = (res ,status , error ) => {
 export const loginFunc = async(req , res) => {
     try {
         const {email , password} = req.body ;
-    
+        
         if(!email || !password){
             return ResError(res , 400 , "invalid credentials" )
         }
@@ -101,7 +101,7 @@ export const loginFunc = async(req , res) => {
             }} , 
             {new : true}
         ).select("-password -refreshToken")
-    
+        
         return res.status(200).json({
             message : "loggedin successfully" , 
             user
@@ -131,3 +131,18 @@ export const logoutFunc = async(req , res) => {
     }
 }
 
+
+export const authCheckFunc = async(req ,res) => {
+    try {
+        return res.status(200).json({
+            success : true ,
+            user : req.user ,
+        })
+    } catch (error) {
+        console.log('error in authCheckFunc ', error);
+        return res.status(500).json({
+            success : false , 
+            error : 'internal server error'
+        })
+    }
+}

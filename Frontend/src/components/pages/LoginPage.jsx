@@ -1,16 +1,33 @@
-import React from 'react'
+import React ,{useEffect} from 'react'
 import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
+import { useAuthStore } from '../store/authUser';
 
 function LoginPage() {
+  const navigate = useNavigate()
+
   const [email , setEmail] = useState('') ;
   const [password , setPassword] = useState('')
 
 
-  const handleSubmitFunc  = async () => {}
+  const {User , login} = useAuthStore() ;
+  useEffect(() => {
+    if(User){
+      navigate('/')
+    }
+  }, [User])
+  
+
+  const handleSubmitFunc  = async (e) => {
+    e.preventDefault() ;
+    const res = await login({email , password})
+    if(res){
+      navigate('/')
+    }
+  }
 
   return (
-    <div className=' h-screen w-full'>
+  <div className=' min-h-screen w-full'>
     <div className=' h-full w-full bg-gradient-to-b from-[#000000CC] to-transparent fixed -z-10'></div>
         <img className='h-full w-full object-cover fixed -z-20 ' src='hero.png'  />
 
