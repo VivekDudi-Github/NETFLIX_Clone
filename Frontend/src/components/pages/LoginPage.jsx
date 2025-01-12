@@ -18,8 +18,8 @@ function LoginPage() {
   }, [User])
   
 
-  const handleSubmitFunc  = async (e) => {
-    e.preventDefault() ;
+  const handleSubmitFunc  = async (event) => {
+    event.preventDefault() ;
     const res = await login({email , password})
     if(res){
       navigate('/')

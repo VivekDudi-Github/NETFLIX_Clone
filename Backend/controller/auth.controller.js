@@ -119,7 +119,7 @@ export const loginFunc = async(req , res) => {
 export const logoutFunc = async(req , res) => {
     
     try {
-        res.clearCookie()
+        res.clearCookie('refreshToken')
         
         return res.status(200).json({
             message : 'Successfully logged Out'
@@ -134,9 +134,15 @@ export const logoutFunc = async(req , res) => {
 
 export const authCheckFunc = async(req ,res) => {
     try {
+        let user = req.user
+        user = user.toObject()
+        const { password , refreshToken , ...restUser} = user
+        console.log(restUser);
+        
+
         return res.status(200).json({
             success : true ,
-            user : req.user ,
+            user : restUser ,
         })
     } catch (error) {
         console.log('error in authCheckFunc ', error);

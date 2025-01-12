@@ -1,7 +1,6 @@
 import axios from 'axios';
 import {create} from 'zustand' ;
 import toast from 'react-hot-toast'
-import { User } from 'lucide-react';
 
 export const useAuthStore = create((set) => ({
     User : null , 
