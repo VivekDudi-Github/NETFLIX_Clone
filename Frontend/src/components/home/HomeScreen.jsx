@@ -26,7 +26,7 @@ function HomeScreen() {
           </p>
         </div>
       </div>
-    
+     
     </div>
     </>
   )
