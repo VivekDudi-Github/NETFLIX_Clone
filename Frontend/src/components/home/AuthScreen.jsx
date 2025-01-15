@@ -1,5 +1,5 @@
 import React, {useState} from 'react'
-import { Link, Navigate, useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 
 import {ChevronRight} from 'lucide-react'
 
@@ -7,6 +7,8 @@ import {ChevronRight} from 'lucide-react'
   function AuthScreen() {
     const [email ,setEmail] = useState('')
     const navigate = useNavigate();
+
+   
 
     const handleSumbit = async(e) => {
       e.preventDefault() ;

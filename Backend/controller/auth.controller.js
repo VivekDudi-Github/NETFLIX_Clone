@@ -137,7 +137,7 @@ export const authCheckFunc = async(req ,res) => {
         let user = req.user
         user = user.toObject()
         const { password , refreshToken , ...restUser} = user
-        console.log(restUser);
+       
         
 
         return res.status(200).json({

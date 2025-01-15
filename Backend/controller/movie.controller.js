@@ -89,13 +89,14 @@ export const fetchCatagoryMovies = async(req , res) => {
     try {
         //catgories = top_rated , popular , upcoming , now_playing
         const {catagory} = req.params ;
-        const url = `https://api.themoviedb.org/3/tv/${catagory}?language=en-US&page=1`
+        
+        const url = `https://api.themoviedb.org/3/movie/${catagory}?language=en-US&page=1`
         const response = await fetchFromTMDB(url) ;
         
         return ResSuccess(res , 200 , response.results) ;
 
     } catch (error) {
-        console.log("error in getting movie from catagory" , error);
+        // console.log("error in getting movie from catagory" , error);
         if(error.message.includes(404))
             return ResError(res , 404 , "no movies found in this catagory")
         return ResError(res , 500 , "internal server error")
