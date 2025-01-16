@@ -58,7 +58,6 @@ export const fetchTvDetails = async(req , res) => {
         const url = `https://api.themoviedb.org/3/tv/${id}?language=en-US`
         
         const response = await fetchFromTMDB(url) ;
-        console.log(response);
         
         return ResSuccess(res , 200 , response)
 
@@ -77,9 +76,8 @@ export const fetchSimilarTv = async(req , res) => {
         const url = `https://api.themoviedb.org/3/tv/${id}/similar?language=en-US&page=1` ;
 
         const response = await fetchFromTMDB(url) ;
-        if(response.results.length < 1){
-            return res.status(404).send(null)
-        }
+        console.log(response);
+        
         return ResSuccess(res , 200 , response.results)
 
     } catch (error) {

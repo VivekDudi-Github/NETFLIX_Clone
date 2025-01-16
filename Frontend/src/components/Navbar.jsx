@@ -34,7 +34,7 @@ const toggleMobileMenu = () => {
                 >
                     TV Shows
                 </Link>
-                <Link to={'/'} className='hover:underline'>
+                <Link to={'/history'} className='hover:underline'>
                     History
                 </Link>
             </div>
