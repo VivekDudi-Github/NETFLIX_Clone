@@ -8,6 +8,7 @@ import Footer from './components/Footer.jsx'
 import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from './components/store/authUser.js'
 import { Loader } from 'lucide-react'
+import SearchPage from './components/pages/SearchPage.jsx'
 
 
 function App() {
@@ -33,7 +34,9 @@ function App() {
       <Route path='/' element={<HomePage/>} />
       <Route path='/login' element={ !User ? <LoginPage/> : <Navigate to={'/'} /> } />
       <Route path='/signup' element={ !User ? <SignUp/> : <Navigate to={'/'} /> } />
-      <Route path='/watch/:id' element={ !User ? <LoginPage/> : <WatchPage/> } />
+      <Route path='/watch/:id' element={ !User ? <Navigate to={'/login'} /> : <WatchPage/> } />
+
+      <Route path='/search/' element={ !User ? <Navigate to={'/login'} /> : <SearchPage/> } />
 
     </Routes>
     <Toaster />

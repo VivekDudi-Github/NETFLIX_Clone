@@ -37,7 +37,9 @@ function MovieSlider({catagory}) {
 
  
   return (
-    <div className='bg-black text-white relative px-5 md:px-20 '>
+  <>
+    {content.length !== 0 && (
+      <div className='bg-black text-white relative px-5 md:px-20 '>
       <h2 className='font-bold text-2xl pl-2 mb-2'>
         {FormattedCatagory} {FormattedCatagoryType}
       </h2>
@@ -45,7 +47,7 @@ function MovieSlider({catagory}) {
         onMouseEnter={() => setIsShowArrows(true)}
         onMouseLeave={() => setIsShowArrows(false)}
       >
-        {content?.map((item) => (
+        {content.map((item) => (
           <Link className=' md:min-w-40 min-w-32 md:p-2   ' to={`/watch/${item.id}`} key={item.id}>
             <img className=' object-cover md:h-56  h-44 ' src={item?.poster_path ? SMALL_IMG_BASE_URL+item?.poster_path : SMALL_IMG_BASE_URL+item?.backdrop_path} alt={item?.name || 'name'} />
             <h3 className=' text-sm '>{item.name || item.title}</h3>
@@ -67,6 +69,8 @@ function MovieSlider({catagory}) {
         }
       </div>
     </div>
+    )}
+  </>
   )
 }
 
