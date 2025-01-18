@@ -32,11 +32,11 @@ function App() {
   <>
     <Routes>
       <Route path='/' element={<HomePage/>} />
-      <Route path='/login' element={ !User ? <LoginPage/> : <Navigate to={'/'} /> } />
-      <Route path='/signup' element={ !User ? <SignUp/> : <Navigate to={'/'} /> } />
-      <Route path='/watch/:id' element={ !User ? <Navigate to={'/login'} /> : <WatchPage/> } />
+      <Route path='/login' element={ User === null ? <LoginPage/> : <Navigate to={'/'} /> } />
+      <Route path='/signup' element={ User === null ? <SignUp/> : <Navigate to={'/'} /> } />
+      <Route path='/watch/:id' element={ User === null ? <Navigate to={'/login'} /> : <WatchPage/> } />
 
-      <Route path='/search/' element={ !User ? <Navigate to={'/login'} /> : <SearchPage/> } />
+      <Route path='/search/' element={ User === null ? <Navigate to={'/login'} /> : <SearchPage/> } />
 
     </Routes>
     <Toaster />

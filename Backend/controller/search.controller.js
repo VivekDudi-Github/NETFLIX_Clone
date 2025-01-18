@@ -99,7 +99,7 @@ export const searchTvFunc  = async (req , res)=> {
         const response = await fetchFromTMDB(url)
         const textquery = {
             text : query , 
-            type : 'Tv'
+            type : 'TV'
         }
 
         const fetchSearchQueryHistory = await SearchQueryHistory.findOne({
@@ -140,7 +140,7 @@ export const getSearchQueryHistory = async( req , res) => {
         if(!fetchSearchQueryHistory){
             return res.status(200).send(null)
         }else{
-            return ResSuccess(res , 200 , fetchSearchQueryHistory)
+            return ResSuccess(res , 200 , fetchSearchQueryHistory.queries)
         }
 
     } catch (error) {
