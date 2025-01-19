@@ -14,11 +14,11 @@ const VisitedHistorySchema = mongoose.Schema({
     } , 
     type : {
         type : String , 
-        enum : ['Movie' , 'Person' , 'Tv'] ,
+        enum : ['Movie' , 'Person' , 'TV'] ,
         required : true
     }
 
-}  , { timestamp : true})
+}  , { timestamps : true})
 
 
 const SearchHistorySchema = new mongoose.Schema({
@@ -31,7 +31,7 @@ const SearchHistorySchema = new mongoose.Schema({
         type : [VisitedHistorySchema]
     }
 
-} , {timestamp : true}
+} , {timestamps : true}
 )
 
 export const searchHistory = mongoose.model('SeachHistory' , SearchHistorySchema)
@@ -51,7 +51,7 @@ const SearchQueryHistorySchema  = new mongoose.Schema({
                 } , 
                 type : {
                     type : String ,
-                    enum : ['Movie' , 'Tv' , 'Person'] , 
+                    enum : ['Movie' , 'TV' , 'Person'] , 
                     required : true 
                 }
             }

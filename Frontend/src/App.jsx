@@ -9,7 +9,8 @@ import { Toaster } from 'react-hot-toast'
 import { useAuthStore } from './components/store/authUser.js'
 import { Loader } from 'lucide-react'
 import SearchPage from './components/pages/SearchPage.jsx'
-
+import HistoryPage from './components/pages/HistoryPage.jsx'
+import NotFoundPage from './components/pages/NotFoundPage.jsx'
 
 function App() {
   const navigate = useNavigate() ;
@@ -37,7 +38,9 @@ function App() {
       <Route path='/watch/:id' element={ User === null ? <Navigate to={'/login'} /> : <WatchPage/> } />
 
       <Route path='/search/' element={ User === null ? <Navigate to={'/login'} /> : <SearchPage/> } />
-
+      <Route path='/history/' element={ User === null ? <Navigate to={'/login'} /> : <HistoryPage/> } />
+    
+      <Route path='/*' element={<NotFoundPage/>} />
     </Routes>
     <Toaster />
     <Footer />

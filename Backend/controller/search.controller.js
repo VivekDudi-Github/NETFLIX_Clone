@@ -1,5 +1,5 @@
 import { fetchFromTMDB } from "../utils/movieAPI.js"
-import { SearchQueryHistory } from "../models/searchHistory.model.js"
+import { searchHistory, SearchQueryHistory } from "../models/searchHistory.model.js"
 
 const ResError = (res , code ,error) => {
     return res.status(code).json({
@@ -73,8 +73,9 @@ export const searchPersonFunc  = async (req , res)=> {
                 queries : [textquery]
             })
         }else if(fetchSearchQueryHistory.queries?.at(-1)?.text !== textquery.text){
-            await SearchQueryHistory.findOneAndUpdate({userId : req.user._id} ,{
-                $push : { queries : textquery}
+            await SearchQueryHistory.findOneAndUpdate(
+                {userId : req.user._id} ,
+                {$push : { queries : textquery}
             })
         }
         
@@ -154,7 +155,6 @@ export const getSearchQueryHistory = async( req , res) => {
 export const deleteSearchQueryHistory = async( req , res) => {
     try {
         const {id} = req.params ;
-        console.log(id);
         
         await SearchQueryHistory.findOneAndUpdate(
             {userId : req.user._id} , 
@@ -165,5 +165,37 @@ export const deleteSearchQueryHistory = async( req , res) => {
     } catch (error) {
         console.log('error while deleting a query history' , error);
         return ResError(res ,500  , 'Internal server error')
+    }
+}
+
+export const getSearchHistory = async(req, res) => {
+    const userId = req.user._id ;
+
+    try {
+        const response = await searchHistory.findOne({userId : userId})
+        if(!response){
+            ResError(res  ,200 ,null )
+        }
+
+        return ResSuccess(res , 200 , response)
+    
+    } catch (error) {
+        console.log( 'error while fetching the search history' , error );
+        return ResError(res ,500 , 'Internal Server Error' )
+    }
+
+}
+
+export const deleteSearchHistory = async(req , res)  => {
+    const {id} = req.params ;
+    try {
+        await searchHistory.findOneAndUpdate(
+            {userId : req.user._id} ,
+            {$pull : { visited : {id : id}}}
+        )
+        return ResSuccess(res ,200 ,null)
+    } catch (error) {
+        console.log('error while delete Search HIstory' , error);
+        ResError(res , 500 , 'Internal searver error')
     }
 }

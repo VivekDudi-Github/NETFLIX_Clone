@@ -1,16 +1,15 @@
 import React, { useEffect, useRef, useState } from 'react'
 import { useContentStore } from '../store/content';
 import Navbar from '../Navbar'
-import { Loader, Loader2Icon, Search, SparklesIcon, TrashIcon } from 'lucide-react';
+import { Loader2Icon, Search, TrashIcon } from 'lucide-react';
 import axios from 'axios';
 import { SMALL_IMG_BASE_URL } from '../utils/constants';
 import { Link } from 'react-router-dom';
 
-//todo : auto 
-// load further results & remove the query history query
+//todo : auto load further results 
 
 function SearchPage() {
-    const InputRef = useRef(null)
+    const InputRef = useRef(null) ;
 
     const [activeTab , setactiveTab] = useState('Movie')
     const [SearchTerm , setSearchTerm] = useState('')
