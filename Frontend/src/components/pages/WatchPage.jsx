@@ -26,6 +26,7 @@ function WatchPage() {
     const [IsShowArrows , setIsShowArrows] = useState(false)
 
     const {contentType} = useContentStore() ;
+console.log(content);
 
     useEffect(() => {
 
@@ -55,6 +56,7 @@ function WatchPage() {
         try {
             setIsLoadingSimilar(true)
             const data =  await axios.get(`/api/v1/${contentType}/${id}/similar`)
+            
             setSimilarContent(data.data.data)
          
             

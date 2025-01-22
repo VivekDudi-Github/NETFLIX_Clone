@@ -63,7 +63,7 @@ export const fetchMovieDetails = async( req , res) => {
         
         const HistoryExists = await searchHistory.findOne({userId : req.user._id})
         const VisitedField = {
-            name :response.name || response.original_name || response.original_title,
+            name : response.original_title || response.title,
             id : response.id ,
             avatar : response.poster_path ,
             type : 'Movie' ,

@@ -67,7 +67,7 @@ function HomeScreen() {
               Play
             </Link>
             <Link className='  bg-gray-500/70 hover:bg-gray-700 text-white py-2 px-4 rounded flex items-center font-bold duration-200' 
-            to={'/watch/123'}>
+            to={'/watch/'+trendingContent?.id}>
               < Info className='size-6 mr-2 ' />
               More Info
             </Link>

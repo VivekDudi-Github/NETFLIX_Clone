@@ -65,7 +65,7 @@ export const fetchTvDetails = async(req , res) => {
         
         const HistoryExists = await searchHistory.findOne({userId : req.user._id})
         const VisitedField = {
-            name :response.name || response.original_name,
+            name :response.original_name || response.original_name,
             id : response.id ,
             avatar : response.poster_path ,
             type : 'TV' ,
