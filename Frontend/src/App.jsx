@@ -11,9 +11,9 @@ import { Loader } from 'lucide-react'
 import SearchPage from './components/pages/SearchPage.jsx'
 import HistoryPage from './components/pages/HistoryPage.jsx'
 import NotFoundPage from './components/pages/NotFoundPage.jsx'
+import WatchContentPage from './components/pages/WatchContentPage.jsx'
 
 function App() {
-  const navigate = useNavigate() ;
   const {authCheck , isLoading , User} = useAuthStore() ;
   useEffect(() => {
       authCheck();
@@ -26,6 +26,7 @@ function App() {
           <Loader className='animate-spin text-red-600' />
         </div>
       </div>
+
     )
   }
   
@@ -39,7 +40,8 @@ function App() {
 
       <Route path='/search/' element={ User === null ? <Navigate to={'/login'} /> : <SearchPage/> } />
       <Route path='/history/' element={ User === null ? <Navigate to={'/login'} /> : <HistoryPage/> } />
-    
+      <Route path='/watch/content' element={ User === null ? <Navigate to={'/login'} /> : <WatchContentPage />} />
+
       <Route path='/*' element={<NotFoundPage/>} />
     </Routes>
     <Toaster />

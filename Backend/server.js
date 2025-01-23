@@ -24,7 +24,7 @@ app.use('/api/v1/movies' , protectRoute , movieRoutes)
 app.use('/api/v1/tv' ,protectRoute , tvRoutes)
 app.use('/api/v1/search' , protectRoute , searchRoutes)
 app.use('/api/v1/history' , protectRoute , historyRoutes) 
-app.use('/api/v1/watch' , protectRoute , watchRoutes )
+app.use('/api/v1/watch'  , watchRoutes )
 
 app.listen(port ,() => {
     console.log("server started at http://localhost:"+port);
